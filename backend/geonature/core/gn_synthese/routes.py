@@ -12,6 +12,7 @@ from flask import (
 )
 from sqlalchemy import distinct, func, desc, select, text
 from sqlalchemy.orm import exc
+from geoalchemy2.shape import to_shape
 from geojson import FeatureCollection, Feature
 
 from utils_flask_sqla.generic import serializeQuery, GenericTable
@@ -272,7 +273,10 @@ def get_one_synthese(id_synthese):
     )
     try:
         data = q.one()
+        wkt = to_shape(data[0].the_geom_point)
         synthese_as_dict = data[0].as_dict(True)
+        synthese_as_dict['x'] = round(wkt.x, ndigits=6)
+        synthese_as_dict['y'] = round(wkt.y, ndigits=6)
         synthese_as_dict["actors"] = data[1]
         return synthese_as_dict
     except exc.NoResultFound:

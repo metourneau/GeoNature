@@ -429,6 +429,7 @@ class SyntheseOneRecord(VSyntheseDecodeNomenclatures):
         primaryjoin=(TSources.id_source == id_source),
         foreign_keys=[id_source],
     )
+    the_geom_point = DB.Column(Geometry("GEOMETRY", 4326))
     areas = DB.relationship(
         "LAreas",
         secondary=corAreaSynthese,
