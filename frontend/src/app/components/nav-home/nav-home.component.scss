@@ -14,16 +14,18 @@
   box-shadow: 3px 3px 5px 0px #ccc !important;
 }
 
-
-
-
 .appnav {
-  width: 220px;
-  min-width: 65px;
+  /*OEB*/
+  /*width: 220px;
+  min-width: 65px;*/
+  
+  width: 60px;
 }
 
 .sidenav-container {
-  height: 100%;
+  /*OEB*/
+  /*height: 100%;*/
+  height: calc(100% - 60px);
 }
 
 .list {
@@ -62,4 +64,13 @@ mat-icon {
 
 .menu-button mat-icon.menu-icon {
   margin: 0;
+}
+
+.mat-drawer{
+  background-color: #333333;
+}
+
+#logo-structure{
+  height: 60px;
+  margin: -16px;
 }
