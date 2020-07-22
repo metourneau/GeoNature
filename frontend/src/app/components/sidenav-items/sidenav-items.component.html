@@ -4,13 +4,14 @@
   </a>
 </mat-card-->
 <mat-nav-list class="appnav">
-  <a href="#{{home_page.module_url}}">
+  <!--a href="#{{home_page.module_url}}"-->
+  <a href="http://10.1.0.181/atlas">
     <mat-list-item
       (click)="setHome()"
       [routerLink]="home_page.module_url"
       routerLinkActive="active"
       class="sidenav-item"
-      matTooltip="Retour&#13;à&#13;l'accueil"
+      matTooltip="Accueil"
       matTooltipPosition="right"
       matTooltipClass="tooltip-atlas"
     >

@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router ,ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,36 @@ export class AuthService {
   token: string;
   loginError: boolean;
   public isLoading = false;
-  constructor(private router: Router, private _http: HttpClient, private _cookie: CookieService) {}
+  /*OEB*/
+  public public_access :boolean ;
+  constructor(private router: Router, private _http: HttpClient, private _cookie: CookieService, private route : ActivatedRoute) {
+
+	/*OEB*/
+
+	this.route.queryParams.subscribe(params => {
+
+	 var keys = Object.keys(params);
+	 //console.log(keys);
+	 //console.log(keys[0]) ;
+	 //console.log(keys.length ) ;
+
+	 if (keys.length > 0 && keys[0]=='open' && params.open =='true')
+	  {
+		this.public_access =  true;
+	  }else{
+		 this.public_access = false ;
+	  }
+
+	  console.log("public access = " + this.public_access ) ;
+	  if(this.public_access) {
+		const user = {username : 'public',password : 'public'} ;
+		this.signinUser(user);
+
+	  }
+	});
+	
+}
+	/*FIN OEB*/
 
   setCurrentUser(user) {
     localStorage.setItem('current_user', JSON.stringify(user));
