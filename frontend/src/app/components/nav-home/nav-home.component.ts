@@ -45,7 +45,9 @@ export class NavHomeComponent implements OnInit, OnDestroy {
       if (module) {
         this.moduleName = module.module_label;
         if (module.module_doc_url) {
-          this.currentDocUrl = module.module_doc_url;
+          /*OEB*/
+          /*this.currentDocUrl = module.module_doc_url;*/
+          this.currentDocUrl = "http://10.1.0.181/atlas/presentation#tutoriel";
         }
       } else {
         this.moduleName = 'Accueil';

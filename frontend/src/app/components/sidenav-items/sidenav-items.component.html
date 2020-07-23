@@ -21,11 +21,21 @@
       <!--span class="module-name">{{ home_page.module_label }} </span-->
     </mat-list-item>
   </a>
+  <a href="http://10.1.0.181/atlas/presentation">
+    <mat-list-item
+      routerLinkActive="active"
+      class="sidenav-item"
+      matTooltip="Présentation"
+      matTooltipPosition="right"
+      matTooltipClass="tooltip-atlas"
+    >
+      <i class="fa fa-info-circle fa-2x picto-atlas" aria-hidden="true"> </i>
+    </mat-list-item>
+  </a>
 
   <a *ngFor="let module of moduleService.displayedModules" href="{{module.module_url}}" target="_self">
     <mat-list-item 
       class="sidenav-item" 
-      (click)="_sidenavService.toggleSideNav()"
       matTooltip="{{ module.module_label }}"
       matTooltipPosition="right"
       matTooltipClass="tooltip-atlas">
@@ -33,6 +43,7 @@
       <i class="fa {{module.module_picto}} fa-2x" aria-hidden="true"> </i>
       <!--span class="module-name">{{ module.module_label }} </span-->
     </mat-list-item>
+    <!--(click)="_sidenavService.toggleSideNav()"-->
   </a>
 </mat-nav-list>
 
