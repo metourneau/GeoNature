@@ -64,20 +64,8 @@ export class PlacesListComponent extends MarkerComponent implements OnInit, OnDe
     document.getElementById('ListPlacesLegend').title = "Liste des lieux";
     L.DomEvent.disableClickPropagation(document.getElementById('ListPlacesLegend'));
     document.getElementById('ListPlacesLegend').onclick = () => {
-
-     this.listPlacesSub = this._dfs.
-      getPlaces()
-      .subscribe(res => {
-          if(Object.keys(res[0]).length > 0){
-            this.places = res;
-            this.place = this.places[0];
-          }else{
-            this.places = null;
-            this.place = null;
-          }
-        },
-        console.error
-      );
+      
+      this.fetchPlaces();
       this.modalService.open(this.modalContent);
       
     };
@@ -116,24 +104,25 @@ export class PlacesListComponent extends MarkerComponent implements OnInit, OnDe
     if(confirm("Êtes-vous sûr de vouloir supprimer ce lieu?")) {
         this._dfs.deletePlace(this.selectedPlace.id).subscribe(res => {
           this.commonService.translateToaster(res.status, res.message);
-          this.listPlacesSub = this._dfs.getPlaces().subscribe(resu => {
-              if(Object.keys(resu[0]).length > 0){
-                //Dans le cas ou l'on retourne des lieux, on sélectionne le premier de la liste 
-                this.places = resu;
-                this.place = this.places[0];
-              }else{
-                //Dans le cas ou l'on ne retourne pas de lieu, on vide la liste et passe à null le lieu selectionné
-                this.places = null;
-                this.place = null;
-              }
-            },
-            console.error
-          );
+          this.fetchPlaces();
         }    
       );
     }
    }
 
+   fetchPlaces() {
+    this._dfs.getPlaces().subscribe((res) => {
+        this.places = res;
+        this.place = this.places[0];
+    },
+      (err) => {
+        if (err.status === 404) {
+          this.places = [];
+          this.place = null;
+        }
+      }
+    );
+  }
   ngOnDestroy() {
     //alert("ok");
     //this.mapService.removeAllLayers(this.map, this.selectedPlace)

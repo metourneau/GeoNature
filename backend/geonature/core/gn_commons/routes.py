@@ -220,11 +220,8 @@ def get_t_mobile_apps():
 @json_resp
 def get_places(info_role):
     id_role = info_role.id_role
-    lieux_exists = DB.session.query(TPlaces).filter(TPlaces.id_role==id_role).scalar()
-    if lieux_exists :
-        data = DB.session.query(TPlaces).filter(TPlaces.id_role==id_role).all()
-        return [n.as_geofeature('place_geom', 'id_place') for n in data]
-    return [{}]
+    data = DB.session.query(TPlaces).filter(TPlaces.id_role==id_role).all()
+    return [n.as_geofeature('place_geom', 'id_place') for n in data]
 
 #######################################################################################
 # supprimer un lieu
