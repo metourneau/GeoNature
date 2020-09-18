@@ -52,6 +52,12 @@ corSiteModule = DB.Table(
         ForeignKey("gn_commons.t_modules.id_module"),
         primary_key=True,
     ),
+    DB.Column(
+        "id_base_sites_groups",
+        DB.Unicode,
+        ForeignKey("gn_commons.t_base_sites_groups"),
+        primary_key=False,
+    ),
     schema="gn_monitoring"
 )
 
@@ -138,7 +144,7 @@ class TBaseSites(DB.Model):
     """
         Table centralisant les données élémentaire des sites
     """
-
+    
     __tablename__ = "t_base_sites"
     __table_args__ = {"schema": "gn_monitoring"}
     id_base_site = DB.Column(DB.Integer, primary_key=True)
@@ -189,3 +195,36 @@ class TBaseSites(DB.Model):
 
     def get_geofeature(self, recursif=True):
         return self.as_geofeature("geom", "id_base_site", recursif)
+
+
+#geofit
+@serializable
+class TBaseSites_groups(DB.Model):
+    """
+        Table centralisant les données élémentaire des sites
+    """
+    
+    __tablename__ = "t_base_sites_groups"
+    __table_args__ = {"schema": "gn_monitoring"}
+    id_base_sites_groups = DB.Column(DB.Integer, primary_key=True)
+    commune = DB.Column(DB.Unicode)
+    jeu_donnees = DB.Column(DB.Unicode)
+    description = DB.Column(DB.Unicode)
+    nom_base_sites_groups = DB.Column(DB.Unicode)
+    id_inventor = DB.Column(DB.Integer, ForeignKey("utilisateurs.t_roles.id_role")    )
+    uuid_sites_groups = DB.Column( UUID(as_uuid=True), default=select([func.uuid_generate_v4()])  )
+
+    inventor = relationship(
+        User,
+        primaryjoin=(User.id_role == id_inventor),
+        foreign_keys=[id_inventor]
+    )
+    #modules = DB.relationship(
+        #"TModules",
+        #lazy="select",
+        
+        #secondary=corSiteModule,
+        #primaryjoin=(corSiteModule.c.id_base_sites_groups == id_base_sites_groups),
+        #secondaryjoin=(corSiteModule.c.id_module == TModules.id_module),
+        #foreign_keys=[corSiteModule.c.id_base_sites_groups, corSiteModule.c.id_module],
+    #)

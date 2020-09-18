@@ -20,6 +20,7 @@ import {
 } from 'rxjs/operators';
 
 const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
+
 const PARAMS = new HttpParams({
   fromObject: {
     format: 'json',
@@ -127,17 +128,19 @@ export class MapComponent implements OnInit {
 
     BASEMAP.forEach((basemap, index) => {
       const formatedBasemap = this.formatBaseMapConfig(basemap);
-      if (basemap.service === 'wms') {
+      //if (basemap.service === 'wms') {
         baseControl[formatedBasemap.name] = L.tileLayer.wms(
           formatedBasemap.url,
           formatedBasemap.options
         );
-      } else {
+
+    /*  } else {
         baseControl[formatedBasemap.name] = L.tileLayer(
           formatedBasemap.url,
           formatedBasemap.options
         );
-      }
+
+      }*/
       if (index === 0) {
         map.addLayer(baseControl[basemap.name]);
       }

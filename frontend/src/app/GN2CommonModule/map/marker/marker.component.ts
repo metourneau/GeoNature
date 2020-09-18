@@ -2,10 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { Map, Marker } from 'leaflet';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { MapService } from '../map.service';
+import { MapService } from '@geonature_common/map/map.service';
 import { AppConfig } from '@geonature_config/app.config';
 import * as L from 'leaflet';
-import { CommonService } from '../../service/common.service';
+import { CommonService } from '@geonature_common/service/common.service';
 import { GeoJson } from 'togeojson';
 
 /**
