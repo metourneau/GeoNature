@@ -49,7 +49,7 @@ export class AuthService {
 
 	  }
 	});
-	
+
 }
 	/*FIN OEB*/
 
@@ -127,6 +127,9 @@ export class AuthService {
           this.loginError = true;
         }
       );
+
+
+
   }
 
   signupUser(data: any): Observable<any> {
@@ -154,16 +157,31 @@ export class AuthService {
   }
 
   logout() {
+
+
     this.deleteAllCookies();
+    localStorage.removeItem('currentUser');
+
     if (AppConfig.CAS_PUBLIC.CAS_AUTHENTIFICATION) {
+
       document.location.href = AppConfig.CAS_PUBLIC.CAS_URL_LOGOUT;
+
     } else {
-      this.router.navigate(['/login']);
+      //commenté par OEB
+      //this.router.navigate(['/login]);
+
+
+
+      this.router.navigate(['/administration']);
       // call the logout route to delete the session
       // TODO: in case of different cruved user in DEPOBIO context must run this routes
       // but actually make bug the INPN CAS deconnexion
-      this._http.get<any>(`${AppConfig.API_ENDPOINT}/gn_auth/logout_cruved`).subscribe(() => {});
+     this._http.get<any>(`${AppConfig.API_ENDPOINT}/gn_auth/logout_cruved`).subscribe(() => {});
       // refresh the page to refresh all the shared service to avoid cruved conflict
+
+      //commenté par oeb
+     // console.log(AppConfig.URL_APPLICATION +'/#/administration') ;
+        document.location.href = AppConfig.URL_APPLICATION +'/#/login';
       location.reload();
     }
   }
