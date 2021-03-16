@@ -90,12 +90,41 @@ export class PlacesListComponent extends MarkerComponent implements OnInit {
       this.commonService.translateToaster('error', 'Aucun lieu sélectionné');
       return;
     }
+<<<<<<< HEAD
     this.selectedPlace = this.place;
     if (confirm('Êtes-vous sûr de vouloir supprimer ce lieu?')) {
       this._dfs.deletePlace(this.selectedPlace.id).subscribe(res => {
         this.fetchPlaces();
       });
     }
+=======
+    this.selectedPlace=this.place;
+    if(confirm("Êtes-vous sûr de vouloir supprimer ce lieu?")) {
+        this._dfs.deletePlace(this.selectedPlace.id).subscribe(res => {
+          this.commonService.translateToaster(res.status, res.message);
+          this.fetchPlaces();
+        }    
+      );
+    }
+   }
+
+   fetchPlaces() {
+    this._dfs.getPlaces().subscribe((res) => {
+        this.places = res;
+        this.place = this.places[0];
+    },
+      (err) => {
+        if (err.status === 404) {
+          this.places = [];
+          this.place = null;
+        }
+      }
+    );
+  }
+  ngOnDestroy() {
+    //alert("ok");
+    //this.mapService.removeAllLayers(this.map, this.selectedPlace)
+>>>>>>> geofit/mes-lieux
   }
 
   fetchPlaces() {
