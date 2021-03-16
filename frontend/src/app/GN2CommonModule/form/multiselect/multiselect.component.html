@@ -29,7 +29,7 @@
 
       <span
         (click)="removeItem($event, item)"
-        class="fa fa-times clickable remove-button"
+        class="fa fa-times clickable remove-button" *ngIf="!disabled"
       > </span>
     </span>
 
